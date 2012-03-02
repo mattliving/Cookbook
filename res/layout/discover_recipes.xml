@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#666666" >
+	<GridView
+	    android:id="@+id/discover_gridview"
+	    android:background="#666666"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_centerInParent="true"
+	    android:paddingTop="20dp"
+	    android:columnWidth="90dp"
+	    android:gravity="center"
+	    android:horizontalSpacing="10dp"
+	    android:numColumns="2"
+	    android:stretchMode="columnWidth"
+	    android:verticalSpacing="10dp" >
+	</GridView>
+</RelativeLayout>

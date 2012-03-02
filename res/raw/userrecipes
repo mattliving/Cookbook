@@ -1,0 +1,69 @@
+pizza
+flour, tomato
+bake everything
+1
+MAIN
+30
+SPRING
+Italia
+5
+
+hamburger
+bread, meat
+bake everything
+3
+MAIN
+45
+SPRING
+Germany
+25
+
+kebab
+bread, lupus
+bake everything
+1
+MAIN
+30
+SPRING
+Turkey
+33
+
+pasta
+spaghetti, sauce
+boil it
+5
+MAIN
+10
+NULL
+Italy
+100
+
+fried chicken
+chicken, oil
+fry it
+5
+NULL
+10
+NULL
+alabama
+2.5
+
+fish & chips
+fish, chips
+fry it
+5
+NULL
+10
+NULL
+England
+44
+
+cake
+sugar, flour
+bake it
+2
+NULL
+15
+NULL
+Everywhere
+11

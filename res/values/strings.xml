@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+        <string name="app_name">Cookbook</string>
+    <string name="app_desc">Cookbook is the mobile app for creating, organizing and sharing your recipes!</string>
+    <string name="app_action">I am using Cookbook for Android</string>
+    <string name="api_response">Api Response:</string>
+    <string name="cookbookFBpage">http://www.facebook.com/apps/application.php?id=263632013686454</string>
+    <string name="view_post">View Post</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="tip_label">Tip:</string>
+    <string name="post_tip">\'read_stream\' permission is required to view and delete the post.\n\nUse SDK dialogs to publish stories or post on friends wall. <a href="https://developers.facebook.com/docs/reference/dialogs">More info</a>\n\n<a href="https://developers.facebook.com/docs/reference/api/Comment">Like and Comment on a post</a></string>
+    
+    <string name="exception">Exception: </string>
+    <string name="facebook_error">Facebook Error: </string>
+    <string name="post_on_wall_title">Post on wall?</string>
+    <string name="post_on_wall">Would you like to post on %1$s\'s wall</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+        
+    <string name="Ingredient">Ingredient</string>
+    <string name="Amount">Amount (weight, volume etc.)</string>
+    <string-array name="WeightMeasurement">
+        <item >Gram(s) (g)</item>
+        <item >Kilogram(s) (kg)</item>
+        <item>Ounce(s) (oz)</item><item>Pound(s) (lb)</item><item>Millilitre(s) (ml)</item>
+        <item>Litre(s) (l)</item><item>Pint(s)</item><item>Gallon(s)</item><item >Teaspoon(s)</item>
+        <item >Tablespoon(s)</item>
+        <item >Cup(s)</item>
+        <item >Pinch</item>
+        <item >Unit(s) (clove/lemon etc..)</item>
+    </string-array>
+    <string name="CookingTime">Cooking Time</string>
+    <string name="Hours">Hours</string>
+    <string name="Minutes">Minutes</string>
+    <string name="Measurement">Measurement</string>
+    <string name="NoMoreIngredients">No more Ingredients</string>
+    <string name="AddIngredient">Add another ingredient</string>
+    <string name="SubmitIngredients">Submit</string>
+    <string name="Ingredients">Ingredients:</string>
+    <string name="Edit">Edit</string>
+    <string name="Upload">Upload</string>
+    <string name="shareFB">Share on Facebook</string>
+    <string name="shareTwitter">Share on Twitter</string>
+    <string name="Method">Method (please separate steps with a new line)</string>
+    <string name="NameOfRecipe">Name of Recipe</string>
+    <string name="measurementSetting">Preferred Ingredient Measurements</string>
+    <string-array name="measurementsArray">
+        <item>Metric</item>
+        <item>Imperial</item>
+        <item>American</item>
+    </string-array>
+    <string-array name="TypeOfRecipe">
+        <item>All</item>
+        <item >Breakfast</item>
+        <item>Snack</item>
+        <item>Lunch</item>
+        <item >Starter</item>
+        <item >Main Course</item>
+        <item >Dessert</item>
+        
+        
+        <item >Other</item>
+    </string-array>
+    <string name="categories_prompt">Sort</string>
+    <string-array name="categories_array">
+        <item>By Name</item>
+        <item>By Category</item>
+        <item>By Cooking Duration</item>
+        <item>By Occasion</item>
+        <item>By Region</item>
+        <item>By Rating</item>
+    </string-array>
+    <string name="rating_menu_prompt">All</string>
+    <string-array name="Ratings">
+        <item>All</item>
+        <item >1 Star</item>
+        <item>2 Stars</item>
+        <item >3 Stars</item>
+        <item >4 Stars</item>
+        <item >5 Stars</item>
+    </string-array>
+    <string name="season_prompt">All</string>
+    <string-array name="TimeOfYear">
+        <item>All</item>
+        <item >Winter</item>
+        <item>Spring</item>
+        <item >Summer</item>
+        <item >Autumn</item>
+        <item >Christmas</item>
+        <item >Easter</item>
+        <item >Halloween</item>
+    </string-array>
+    <string name="country_prompt">All</string>
+    <string-array name="Country">
+        <item>All</item>
+        <item >England</item>
+        <item>Scotland</item>
+        <item >Ireland</item>
+        <item >Italy</item>
+        <item >Spain</item>
+        <item>America</item>
+    </string-array>
+    <string-array name="CookingTime">
+        <item>All</item>
+        <item >Under 10 mins</item>
+        <item>Under 20 mins</item>
+        <item >Under 30 mins</item>
+        <item >Under 1 hour</item>
+        <item >Under 2 hours</item>
+    </string-array>
+    <string name="Seasonal">Seasonal preference (optional)</string>
+    <string name="Remove">Remove</string>
+    
+    <string name="hello123">Hi!</string>
+    <string name="method">Method:</string>
+    <string name="mealtype">Meal Type:</string>
+    <string name="duration">Duration:</string>
+    <string name="timeofyear">Time Of Year:</string>
+    <string name="region">Region:</string>
+    <string name="Quantity">Quantity (weight, volume etc.)</string>
+    <string name="Region">Region of origin (optional)</string>
+</resources>
