@@ -1,0 +1,17 @@
+In order to run follow the steps outlined below:
+
+1. Download ActionBarSherlock version 3.5.1 from the following URL: http://actionbarsherlock.com/download.html
+2. Create a new Android project folder in Eclipse from the unzipped source file e.g. ~/ActionBarSherlock-3.5.1/library
+3. Make sure the project targets Android version 3.2, if you don't have it install using Android SDK Manager and don't forget to create an AVD for that build as well
+4. Link your Cookbook project to the ActionBarSherlock library project in project properties
+5. Make sure Cookbook project is also targetting Android version 3.2
+6. Clean, build and run the project
+
+If you get stuck, watch this youtube tutorial http://www.youtube.com/watch?feature=player_embedded&v=avcp6eD_X2k
+
+Next Steps:
+
+1. Understand Fragments: http://developer.android.com/guide/topics/fundamentals/fragments.html
+2. Check out some samples of ActionBarSherlock apps: https://github.com/JakeWharton/ActionBarSherlock/tree/master/samples
+
+N.B. Your class will now have to extend FragmentActivity and will need to include the import statement: "import android.support.v4.app.*;"
