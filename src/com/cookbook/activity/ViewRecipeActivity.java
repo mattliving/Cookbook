@@ -22,9 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookbook.R;
-import com.cookbook.Recipe;
-import com.cookbook.RecipeList;
-import com.cookbook.readFile;
+import com.cookbook.*;
 import com.cookbook.adapter.CookbookDBAdapter;
 import com.cookbook.facebook.BaseDialogListener;
 import com.cookbook.facebook.UpdateStatusResultDialog;
@@ -35,7 +33,6 @@ public class ViewRecipeActivity extends Activity
 {
 	private CookbookDBAdapter mDBHelper;
 
-	private Facebook mFacebook;
 	private Cursor recipe;
 	private Cursor ingredients;
 
@@ -73,7 +70,6 @@ public class ViewRecipeActivity extends Activity
         {
         	Bundle b = getIntent().getExtras();
         	recipeID = b.getLong("recipeID");
-        	//System.out.println()
         }
         catch (RuntimeException e)
         {
@@ -176,16 +172,11 @@ public class ViewRecipeActivity extends Activity
             {
             	//Post on current user's wall
             	Bundle params = new Bundle();
-                /*params.putString("caption", getString(R.string.app_name));
-                params.putString("description", getString(R.string.app_desc));
-                params.putString("picture", HACK_ICON_URL);
-                params.putString("name", getString(R.string.app_action));
-                params.putString("link", getString(R.string.cookbookFBpage));*/
             	params.putString("name", recipeName);
-            	params.putString("caption", recipeName);
-            	params.putString("description", method);
+            	//params.putString("caption", mealType);
+            	params.putString("description", mealType);
             	params.putString("picture", HACK_ICON_URL);
-                mFacebook.dialog(v.getContext(), "feed", params, new PostDialogListener());
+                Utility.mFacebook.dialog(v.getContext(), "feed", params, new PostDialogListener());
             }
         });
         
@@ -196,7 +187,7 @@ public class ViewRecipeActivity extends Activity
             	Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             	sharingIntent.setType("text/plain");
             	sharingIntent.setPackage("com.twitter.android");
-            	sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I'm cooking " + recipeName + " with #Cookbook Beta for #Android");
+            	sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "I'm cooking " + recipeName + " with #Cookbook Gamma for #Android");
             	sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject");
             	startActivity(Intent.createChooser(sharingIntent, "Shared with"));
             }
