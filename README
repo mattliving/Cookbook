@@ -11,7 +11,8 @@ If you get stuck, watch this youtube tutorial http://www.youtube.com/watch?featu
 
 Next Steps:
 
-1. Understand Fragments: http://developer.android.com/guide/topics/fundamentals/fragments.html
-2. Check out some samples of ActionBarSherlock apps: https://github.com/JakeWharton/ActionBarSherlock/tree/master/samples
+1. Read Action Bar design patterns to get some inspiration: http://developer.android.com/design/patterns/actionbar.html
+2. Understand Fragments: http://developer.android.com/guide/topics/fundamentals/fragments.html
+3. Check out some samples of ActionBarSherlock apps: https://github.com/JakeWharton/ActionBarSherlock/tree/master/samples
 
 N.B. Your class will now have to extend FragmentActivity and will need to include the import statement: "import android.support.v4.app.*;"
