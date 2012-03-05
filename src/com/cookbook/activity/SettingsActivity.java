@@ -1,17 +1,17 @@
 package com.cookbook.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-import com.cookbook.R;
+import com.cookbook.*;
 import com.cookbook.adapter.CookbookDBAdapter;
 
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends FragmentActivity {
 	private CookbookDBAdapter mDbHelper;
 	private static String measurementSetting = "Metric";
 	

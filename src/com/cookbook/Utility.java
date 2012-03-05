@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,14 +28,15 @@ import com.facebook.android.Facebook;
 
 public class Utility extends Application {
 
-    public static Facebook mFacebook;
-    public static AsyncFacebookRunner mAsyncRunner;
-    public static JSONObject mFriendsList;
-    public static String userUID = null;
-    public static String objectID = null;
-    public static FriendsGetProfilePics model;
-    public static AndroidHttpClient httpclient = null;
-    public static Hashtable<String, String> currentPermissions = new Hashtable<String, String>();
+	public static Facebook mFacebook;
+	public static AsyncFacebookRunner mAsyncRunner;
+	public static SharedPreferences mPrefs;
+	public static JSONObject mFriendsList;
+	public static String userUID = null;
+	public static String objectID = null;
+	public static FriendsGetProfilePics model;
+	public static AndroidHttpClient httpclient = null;
+	public static Hashtable<String, String> currentPermissions = new Hashtable<String, String>();
 
     private static int MAX_IMAGE_DIMENSION = 720;
     public static final String HACK_ICON_URL = "http://www.facebookmobileweb.com/hackbook/img/facebook_icon_large.png";

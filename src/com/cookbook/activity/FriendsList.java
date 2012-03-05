@@ -1,16 +1,14 @@
 package com.cookbook.activity;
 
-import com.cookbook.*;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,11 +20,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cookbook.*;
 import com.cookbook.Utility;
 import com.cookbook.facebook.BaseDialogListener;
 import com.cookbook.facebook.FriendsGetProfilePics;
 
-public class FriendsList extends Activity implements OnItemClickListener {
+public class FriendsList extends FragmentActivity implements OnItemClickListener {
     private Handler mHandler;
 
     protected ListView friendsList;
