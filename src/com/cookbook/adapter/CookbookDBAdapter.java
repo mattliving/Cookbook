@@ -397,6 +397,42 @@ public class CookbookDBAdapter {
         	"CASE "+ KEY_MEAL_TYPE + mealTypeOrder + "," + KEY_RECIPE_NAME);
     }
     
+    
+    /**
+     * Uses the filter with sorting
+     * @param mealType
+     * @param cookingDuration
+     * @param season
+     * @param country
+     * @param rating
+     * @param sortby
+     * @return
+     */
+    public Cursor fetchRecipeFilterSorted(String mealType, int cookingDuration,
+    		String season, String country, float rating, String sortby) {
+    	
+    	// ordering for meal types
+    	String mealTypeOrder = "CASE mealType WHEN 'Breakfast' THEN 1 WHEN 'Lunch' THEN 2 WHEN 'Dinner' THEN 3 WHEN 'Snack' THEN 4 WHEN 'Dessert' THEN 5 ELSE 99 END";
+    	
+    	
+    	// construct filter string
+    	String filter = "";
+    	if (mealType != null) filter += KEY_MEAL_TYPE + " LIKE '" + mealType + "' AND ";
+    	if (cookingDuration > 0) filter += KEY_DURATION + " <= " + cookingDuration + " AND ";
+    	if (season != null) filter += KEY_TIME_OF_YEAR + " LIKE '" + season + "' AND ";
+    	if (country != null) filter += KEY_REGION + " LIKE '" + country + "' AND "; 
+    	if (rating > 0) filter += KEY_RATING + " >= " + rating;
+    	if (filter.endsWith(" AND ")) filter = filter.substring(0, filter.length()-5);
+
+    	if (sortby.equalsIgnoreCase(KEY_MEAL_TYPE)) sortby.concat(mealTypeOrder);
+    	
+    	// returned filtered, sorted query
+        return mDb.query(RECIPE_TABLE, new String[] {PKEY_RECIPE_ID,
+        	KEY_RECIPE_NAME, KEY_METHOD, KEY_MEAL_TYPE, KEY_DURATION,
+        	KEY_TIME_OF_YEAR, KEY_REGION, KEY_RATING, KEY_SERVES}, filter, null, null, null, 
+        	sortby + "," + KEY_RECIPE_NAME);
+    }
+    
     // return cursor at recipe with given recipeID 
     public Cursor fetchRecipe(long recipeId) throws SQLException {
 
@@ -514,7 +550,7 @@ public class CookbookDBAdapter {
         return mDb.insert(RECIPE_INGREDIENTS_TABLE, null, addValues);
     }
     
-    // return cursor containing all ingredients for recipe with given recipeId
+ // return cursor containing all ingredients for recipe with given recipeId
     public Cursor fetchRecipeIngredient(long recipeId) throws SQLException {
 
         Cursor mCursor = mDb.query(RECIPE_INGREDIENTS_TABLE,
@@ -526,6 +562,51 @@ public class CookbookDBAdapter {
             mCursor.moveToFirst();
         }
         return mCursor;
+    }
+    
+    /**
+     * fetch recipe by ingredient name
+     * @param ingredientName
+     * @return
+     * @throws SQLException
+     */
+    public Cursor fetchRecipeByIngredient(String ingredientName) throws SQLException {
+
+        Cursor mCursor = mDb.query(RECIPE_INGREDIENTS_TABLE,
+        	new String[] {PKEY_RECIPE_INGREDIENT_ID, FKEY_RECIPE_ID,
+        	FKEY_INGREDIENT_NAME, KEY_QUANTITY, KEY_UNIT}, 
+        	FKEY_INGREDIENT_NAME + " LIKE "+"'"+ingredientName+"%'", null, null, null,null );
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+    
+/**
+ * Fetches all the ingredients
+ * @return
+ * @throws SQLException
+ */
+    public Cursor fetchAllIngredients() throws SQLException {
+
+        Cursor mCursor = mDb.query(RECIPE_INGREDIENTS_TABLE,
+        	new String[] {PKEY_RECIPE_INGREDIENT_ID, FKEY_RECIPE_ID,
+        	FKEY_INGREDIENT_NAME, KEY_QUANTITY, KEY_UNIT},
+        	null, null, null, null, FKEY_INGREDIENT_NAME);
+
+        if (mCursor != null) {
+            mCursor.moveToFirst();
+        }
+        return mCursor;
+    }
+    
+    // delete recipe ingredients corresponding to given recipe_ID
+    public boolean deleteRecipeIngedients(long recipeId) {
+
+        return mDb.delete(RECIPE_INGREDIENTS_TABLE, FKEY_RECIPE_ID + "=" + recipeId, null)
+        	> 0;
     }
 
     // create friend record using facebook user id as key

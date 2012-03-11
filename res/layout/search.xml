@@ -5,43 +5,48 @@
 
     <LinearLayout
         android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="vertical" >
+			
+			<LinearLayout
+			    android:id="@+id/linearLayout2"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content" >
+						<RelativeLayout
+			    android:id="@+id/relativeLayout1"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_weight="15.28" >
+			<AutoCompleteTextView
+			    android:id="@+id/autoCompleteTextView1"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:layout_weight="15.28"
+			    android:gravity="left" />
 
-        <Spinner
-            android:id="@+id/searchby"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+			<Button
+			    android:id="@+id/buttonsearch"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:layout_alignParentRight="true"
+			    android:layout_alignParentTop="true"
+			    android:text="Search" />
 
-        <ListView
-            android:id="@+id/listView1"
-            android:layout_width="wrap_content"
-            android:layout_height="431dp"
-            android:layout_weight="1" >
-        </ListView>
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/buttonsearch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Search" />
-
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView1"
-                android:layout_width="256dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+			</RelativeLayout>
 
         </LinearLayout>
+         
+        <ListView
+            android:id="@+id/listView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="top" >
+
+        </ListView>
+
+        
 
     </LinearLayout>
 

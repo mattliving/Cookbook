@@ -1,7 +1,15 @@
 package com.cookbook.activity;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import com.cookbook.*;
+import com.cookbook.adapter.*;
+
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -19,10 +27,6 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-//import android.support.v4.app.*;
-
-import com.cookbook.*;
-import com.cookbook.adapter.CookbookDBAdapter;
 
 public class AddRecipeActivity extends Activity {
 	private CookbookDBAdapter mDbHelper;
@@ -50,22 +54,6 @@ public class AddRecipeActivity extends Activity {
         rowAmount.setId(counterRow+remember);
         rowMeasurement.setId(counterRow+remember+1);
         
-        ImageButton homeButton = (ImageButton) findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-            	Intent intent = new Intent(v.getContext(), CookbookActivity.class);
-            	startActivity(intent);
-            }
-        });
-        
-        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
-        searchButton.setOnClickListener(new OnClickListener() {
-            public void onClick(View v) {
-            	Intent intent = new Intent(v.getContext(), SearchActivity.class);
-            	startActivity(intent);
-            }
-        });
-        
         TabHost tabHost=(TabHost)findViewById(R.id.tabHost);
         tabHost.setup();
 
@@ -80,10 +68,15 @@ public class AddRecipeActivity extends Activity {
         TabSpec spec3=tabHost.newTabSpec("Method");
         spec3.setIndicator("Method",getResources().getDrawable(R.drawable.step3));
         spec3.setContent(R.id.tab3);
+        
+        TabSpec spec4=tabHost.newTabSpec("Extras");
+        spec4.setIndicator("Extras",getResources().getDrawable(R.drawable.step4));
+        spec4.setContent(R.id.tab4);
 
         tabHost.addTab(spec1);
         tabHost.addTab(spec2);
         tabHost.addTab(spec3);
+        tabHost.addTab(spec4);
         
         Button mainAdd = (Button) findViewById(R.id.AddIngredients);
         
@@ -191,22 +184,6 @@ public class AddRecipeActivity extends Activity {
             }
         });
     }
-    
-    /*protected void onStart() {};
-    
-    protected void onRestart() {};
-
-    protected void onResume() {
-    	mDbHelper.open();
-    };
-
-    protected void onPause() {
-    	mDbHelper.close();
-    };
-
-    protected void onStop() {};
-
-    protected void onDestroy() {};*/
         
     private OnClickListener listenerOfEditButton = new OnClickListener()
     {
@@ -322,15 +299,21 @@ public class AddRecipeActivity extends Activity {
         }
     };
     
+    public void listenerOfPhotoButton(View v) {
+    	//add code to upload a photo...
+    }
+    
     public void listenerOfUploadButton(View v) {
     	EditText Ingredient = (EditText)findViewById(counterIngredient);
         EditText Amount = (EditText)findViewById(counterAmount);
         EditText Method = (EditText)findViewById(R.id.MethodBox);
         EditText Name = (EditText)findViewById(R.id.NameOfRecipe);
+        EditText Portion = (EditText)findViewById(R.id.PortionSize);
         String IngredientString = Ingredient.getText().toString();
         String AmountString = Amount.getText().toString();
         String MethodString = Method.getText().toString();
         String NameString = Name.getText().toString();
+        String PortionString = Portion.getText().toString();
         EditText Hours = (EditText)findViewById((int) getItemId(R.id.Hours));
     	EditText Minutes = (EditText)findViewById((int) getItemId(R.id.Minutes));
         int hours = 0;
@@ -340,36 +323,49 @@ public class AddRecipeActivity extends Activity {
         if(Minutes.getText().toString().equals("")) minutes = 0;
             else minutes = Integer.parseInt(Minutes.getText().toString());
         int duration = minutes + hours;
-        if ((IngredientString != null) && (IngredientString.length() > 0) &&
-        		(AmountString != null) && (AmountString.length() > 0) &&
-        		(MethodString != null) && (MethodString.length() > 0) &&
-        		(NameString != null) && (NameString.length() > 0) && (duration > 0)) {
-        	new AlertDialog.Builder(AddRecipeActivity.this)
-            .setTitle("Upload Recipe?")
-            .setMessage("Are you sure you want to upload recipe: "+ NameString)
-            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                	uploadInformation();
-                	dialog.dismiss();
-                }
-             })
-             .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) { 
-                	dialog.dismiss();
-                }
-             })
-             .show();
-        } else {
-        	new AlertDialog.Builder(AddRecipeActivity.this)
-        	.setTitle("Fill in all fields")
-        	.setMessage("Please fill in all recipe details")
-        	.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-        		public void onClick(DialogInterface dialog, int which) { 
-        			dialog.dismiss();
+        String emptyField = "Recipe Name";
+        if ((NameString != null) && (NameString.length() > 0)){
+        	emptyField = "Cooking Time";
+        	if ((duration > 0)){
+        		emptyField = "Portion Size";
+        		if ((PortionString != null) && (PortionString.length() > 0)){
+                	emptyField = "Ingredient Information";
+	        		if ((IngredientString != null) && (IngredientString.length() > 0) &&
+	        				(AmountString != null) && (AmountString.length() > 0)){
+	        			emptyField = "Method";
+	        			if ((MethodString != null) && (MethodString.length() > 0)){
+	        				emptyField = "";
+	        				new AlertDialog.Builder(AddRecipeActivity.this)
+	        				.setTitle("Upload Recipe?")
+	        				.setMessage("Are you sure you want to upload recipe: "+ NameString)
+	        				.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+	        					public void onClick(DialogInterface dialog, int which) {
+	        						uploadInformation();
+	        						dialog.dismiss();
+	        					}
+	        				})
+	        				.setNegativeButton("No", new DialogInterface.OnClickListener() {
+	        					public void onClick(DialogInterface dialog, int which) { 
+	        						dialog.dismiss();
+	        					}
+	        				})
+	        				.show();
+	        			}
+	        		}
         		}
-        	})
-        	.show();
+        	}
         }
+        if(emptyField.length() > 0){
+	    	new AlertDialog.Builder(AddRecipeActivity.this)
+	    	.setTitle("Fill in all mandatory fields")
+	    	.setMessage("Please enter "+emptyField)
+	    	.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+	    		public void onClick(DialogInterface dialog, int which) { 
+	    			dialog.dismiss();
+	    		}
+	    	})
+	    	.show();
+	    }
     }
     
     public static String UppercaseFirstLetters(String str) 
@@ -397,11 +393,13 @@ public class AddRecipeActivity extends Activity {
     	EditText Season = (EditText)findViewById((int) getItemId(R.id.Season));
     	EditText Region = (EditText)findViewById((int) getItemId(R.id.Region));
     	EditText Method = (EditText)findViewById((int) getItemId(R.id.MethodBox));
+    	EditText Portion = (EditText)findViewById((int) getItemId(R.id.PortionSize));
     	EditText Ingredient = null;
         EditText Amount = null;
         Spinner WeightMeasurement = null;
         String recipeName = UppercaseFirstLetters(RecipeName.getText().toString());
         String mealType = MealType.getSelectedItem().toString();
+        int portionSize = Integer.parseInt(Portion.getText().toString());
         int hours = 0;
         if(Hours.getText().toString().equals("")) hours = 0;
         	else hours = Integer.parseInt(Hours.getText().toString());
@@ -419,8 +417,11 @@ public class AddRecipeActivity extends Activity {
         long recipeID = 0;
     	
         
+        if (!season.trim().equals("")) season = "All";
+    	if(!region.trim().equals("")) region = "All";
+        
     	recipeID = mDbHelper.createRecipe(recipeName, method, mealType,
-    			duration, season, region);
+    			duration, season, region, 0, portionSize);
     	for (int i = (int) getItemId(R.id.IngredientBox0); i <= counterIngredient; i+=25){
     		if((EditText)findViewById(i) != null){
 	    		Ingredient = (EditText)findViewById(i);
@@ -449,7 +450,29 @@ public class AddRecipeActivity extends Activity {
     		}
     		counter += 25;
     	}
-    	startActivity(getIntent());
+    	FileOutputStream ros;
+		try
+		{
+			ros = openFileOutput("userrecipes", Context.MODE_PRIVATE);
+			readFile rd = new readFile();
+			RecipeList rl = new RecipeList();
+			rl.addRecipe(new Recipe(weightMeasurement, weightMeasurement, weightMeasurement, recipeID, weightMeasurement, counter, weightMeasurement, weightMeasurement, recipeID));
+			rd.writeIDs(rl, ros);
+			try {
+				ros.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	finish();
     }
+
+
 }
+
+

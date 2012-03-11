@@ -97,6 +97,13 @@ public class RecipeList {
 		return false;
 	}
 	
+	public Recipe get(String recipeName) {
+		for (int i = 0; i< list.size(); i++) {
+			if (list.get(i).getName().equals(recipeName)) return list.get(i);
+		}
+		return null;
+	}
+	
 	public int size(){
 		return list.size();
 	}
@@ -115,6 +122,7 @@ public class RecipeList {
 		int cookingTime = cursor.getInt(4);
 		String season = cursor.getString(5);
 		String mRegion = cursor.getString(6);
+		float mRating = cursor.getFloat(7);
 		/*
 		 * Commented until these fields will be part of the database
 		 */
@@ -124,7 +132,7 @@ public class RecipeList {
 		 *  NOT FINAL 
 		 */
 		addRecipe(new Recipe(mName," ",mPreparation,identifier,
-				type,cookingTime,season,mRegion,1f));
+				type,cookingTime,season,mRegion,mRating));
 		
 	}
 	
@@ -151,9 +159,9 @@ public class RecipeList {
 		}
 	}
 	
-	public void fetchfilterRecipes(CookbookDBAdapter adpt, String param1, int param2, String param3, String param4, float param5){
+	public void fetchAllRecipesByName(CookbookDBAdapter adpt) {
 		
-		Cursor cursor = adpt.fetchRecipeFilter(param1,param2,param3, param4,param5);
+		Cursor cursor = adpt.fetchAllRecipesByName();
 		
 		if (cursor == null) return;
 		/**
@@ -169,6 +177,131 @@ public class RecipeList {
 		cursor.moveToNext();
 		}
 	}
+
+	public void fetchAllRecipesByDuration(CookbookDBAdapter adpt) {
+		
+		Cursor cursor = adpt.fetchAllRecipesByDuration();
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+	public void fetchAllRecipesByOccasion(CookbookDBAdapter adpt) {
+		
+		Cursor cursor = adpt.fetchAllRecipesByOccasion();
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+	public void fetchAllRecipesByRegion(CookbookDBAdapter adpt) {
+		
+		Cursor cursor = adpt.fetchAllRecipesByRegion();
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+	public void fetchAllRecipesByRating(CookbookDBAdapter adpt) {
+		
+		Cursor cursor = adpt.fetchAllRecipesByRating();
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+	
+	
+	
+	
+	public void fetchfilterRecipes(CookbookDBAdapter adpt, String mealType, int cookingDuration, String season, String country, float rating){
+		
+		Cursor cursor = adpt.fetchRecipeFilter(mealType,cookingDuration,season, country,rating);
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+	
+/**
+ * fetch filter recipes sorted by sortby
+ * @param adpt
+ * @param mealType
+ * @param cookingDuration
+ * @param season
+ * @param country
+ * @param rating
+ * @param sortby
+ */
+public void fetchfilterRecipesSorted(CookbookDBAdapter adpt, String mealType, int cookingDuration, String season, String country, float rating,String sortby){
+		
+		Cursor cursor = adpt.fetchRecipeFilterSorted(mealType,cookingDuration,season, country,rating,sortby);
+		
+		if (cursor == null) return;
+		/**
+		 * WHY 84 ROWS if the recipes inserted are 3?
+		 */
+		Log.d("MyDebug", String.valueOf(cursor.getCount()));
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			addRecipe(cursor);
+			
+		cursor.moveToNext();
+		}
+	}
+
 	
 	/**
 	 * Add Recipes to the list from a list of database IDs
@@ -237,4 +370,109 @@ public class RecipeList {
 		cursor.moveToNext();
 		}	
 	}
+	
+	public void fetchByIngredientName(CookbookDBAdapter  adpt,String name){
+		
+		Cursor cursor = adpt.fetchRecipeByIngredient(name);
+		if (cursor ==null) return;
+		
+		Vector<Long> ids = new Vector<Long>();
+		
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast())
+		{
+			ids.add(cursor.getLong(1));
+			
+			
+		cursor.moveToNext();
+		}	
+		
+		if (ids.size()>0) fetchFromIDs(ids,adpt);
+		
+		
+	}
+	
+	public RecipeList fetchAllOnlineRecipesFor(OnlineQueryAdapter query, String fid) {
+
+		RecipeList result = new RecipeList();
+		String name = "", ingredients = "", preparation = "", type = "", season = "", region = "";
+		long id;
+		int cookingTime;
+		float rating;
+		OnlineRecipeList onlinelist = query.fetchRecipesSpecificAuthors(fid);
+		OnlineIngredientList ingredientlist; 
+
+		for (int i = 0; i < onlinelist.numberOfRecords(); i++) {
+
+			id = onlinelist.getRecipeId();
+			name = onlinelist.getRecipeName();
+			ingredientlist = query.fetchRecipeIngredientsOneRecipe(fid,id);
+			
+			if (ingredientlist != null)
+			{
+				for (int j = 0; j<ingredientlist.numberOfRecords(); j++){
+					ingredients = ingredients + ingredientlist.getIngredientName() + " ,";
+					ingredientlist.nextRecord();
+				}	
+			}
+			preparation = onlinelist.getMethod();
+			type = onlinelist.getCategory();
+			season = onlinelist.getOccasion();
+			region = onlinelist.getRegion();
+			cookingTime = onlinelist.getDuration();
+			rating = onlinelist.getRatingCount();
+
+			Recipe recipe = new Recipe(name, ingredients, preparation, id, type, cookingTime, season, region, rating);
+			result.addRecipe(recipe);
+			
+			onlinelist.nextRecord();
+			
+			System.out.printf("index = %d\n",i);
+			
+		}
+		return result;
+
+	}
+	
+	
+	public RecipeList fetchAllOnlineRecipes(OnlineQueryAdapter query){
+
+		RecipeList result = new RecipeList();
+		String name = "", ingredients = "", preparation = "", type = "", season = "", region = "";
+		long id;
+		int cookingTime;
+		float rating;
+		OnlineRecipeList onlinelist = query.fetchAllRecipes();
+		OnlineIngredientList ingredientlist; 
+
+		for(int i = 0; i<onlinelist.numberOfRecords(); i++){
+
+			id = onlinelist.getRecipeId();
+			name = onlinelist.getRecipeName();
+			ingredientlist = query.fetchRecipeIngredientsOneRecipe("", id);
+			if (ingredientlist !=null){
+			for(int j = 0; j<ingredientlist.numberOfRecords(); j++){
+				ingredients = ingredients + ingredientlist.getIngredientName() + " ,";
+				ingredientlist.nextRecord();
+			}	
+			}
+			preparation = onlinelist.getMethod();
+			type = onlinelist.getCategory();
+			season = onlinelist.getOccasion();
+			region = onlinelist.getRegion();
+			cookingTime = onlinelist.getDuration();
+			rating = onlinelist.getRatingCount();
+
+			Recipe recipe = new Recipe(name, ingredients, preparation, id, type, cookingTime, season, region, rating);
+			result.addRecipe(recipe);
+			
+			onlinelist.nextRecord();
+			
+			System.out.printf("index = %d\n",i);
+			
+		}
+		return result;
+
+	}
+	
 }

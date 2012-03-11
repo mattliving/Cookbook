@@ -1,23 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  
-    xmlns:android="http://schemas.android.com/apk/res/android"  
-    android:layout_width="fill_parent"  
-    android:layout_height="wrap_content"  
-    android:orientation="vertical"  
-    android:paddingTop="10dip"  
-    android:paddingBottom="10dip"  
-    android:paddingLeft="15dip"  
-    >  
-    <TextView  
-        android:id="@+id/list_complex_title"  
-        android:layout_width="fill_parent"  
-        android:layout_height="wrap_content"  
-        android:textAppearance="?android:attr/textAppearanceLarge"  
-        />  
-    <TextView  
-        android:id="@+id/list_complex_caption"  
-        android:layout_width="fill_parent"  
-        android:layout_height="wrap_content"  
-        android:textAppearance="?android:attr/textAppearanceSmall"  
-        />  
-</LinearLayout>  
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:baselineAligned="true"
+    android:gravity="left|center"
+    android:paddingBottom="5px"
+    android:paddingLeft="5px"
+    android:paddingTop="5px" >
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginRight="6dip"
+        android:maxHeight="75dp"
+        android:maxWidth="75dp"
+        android:src="@drawable/quichehealthyeatingphotosmall"
+        />
+       
+
+    <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="fill_parent"
+       android:layout_weight="1"
+       android:layout_height="fill_parent">
+     
+  	<LinearLayout
+  	    xmlns:android="http://schemas.android.com/apk/res/android"
+  	    android:layout_width="fill_parent"
+  	    android:layout_height="wrap_content"
+  	    android:baselineAligned="false"
+  	    android:gravity="left|center"
+  	    android:paddingBottom="5px"
+  	    android:paddingLeft="5px"
+  	    android:paddingTop="5px" >
+      
+       <TextView android:id="@+id/list_recipe_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textSize="20sp"
+      android:gravity="center_vertical|left"/>
+      
+      
+  	</LinearLayout>      
+  	<LinearLayout
+  	    xmlns:android="http://schemas.android.com/apk/res/android"
+  	    android:layout_width="fill_parent"
+  	    android:layout_height="wrap_content"
+  	    android:baselineAligned="false"
+  	    android:gravity="left|center"
+  	    android:paddingBottom="5px"
+  	    android:paddingLeft="5px"
+  	    android:paddingTop="5px" >  
+  	    	
+  	      <RatingBar
+          android:id="@+id/small_ratingbar"
+          style="?android:attr/ratingBarStyleSmall"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="left|center_vertical" />
+  	
+  	    <TextView android:id="@+id/list_recipe_caption" 
+      android:layout_width="wrap_content" 
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10px"
+      android:layout_gravity="left" 
+      android:textColor="#A4C639"/>
+  	  </LinearLayout>
+  
+  </LinearLayout>
+   
+</LinearLayout>
+ 

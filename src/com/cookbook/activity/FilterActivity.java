@@ -11,6 +11,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -20,7 +24,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.ViewFlipper;
 
-public class FilterActivity extends Activity {
+public class FilterActivity extends FragmentActivity {
 
     /** Database Adapter */
 	private CookbookDBAdapter mDbHelper;
@@ -167,16 +171,45 @@ public class FilterActivity extends Activity {
         
         submit.setOnClickListener(new View.OnClickListener() {
         	public void onClick(View view) {
-            	Intent intent = new Intent(view.getContext(), ShowListActivity.class);
+            	Intent intent = new Intent(view.getContext(), BasicListActivity.class);
     			intent.putExtra("name", "Filter Results");
-    			intent.putExtra("sortval", ""); 
-          		intent.putExtra("param1", Spinval1);
-          		intent.putExtra("param2", cookingval);
-          		intent.putExtra("param3", Spinval3);
-          		intent.putExtra("param4", Spinval4);
-          		intent.putExtra("param5", ratingval);
+    			intent.putExtra("sortby", "recipeName"); 
+          		intent.putExtra("mealType", Spinval1);
+          		intent.putExtra("cookingDuration", cookingval);
+          		intent.putExtra("season", Spinval3);
+          		intent.putExtra("country", Spinval4);
+          		intent.putExtra("rating", ratingval);
             	startActivityForResult(intent, 0);
         	}
          });
         }
+	
+    //Important method for action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    
+    //Important method for action bar, item selected listenener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        	case R.id.search:
+            // app icon in action bar clicked; go home
+            Intent intent1 = new Intent(this, SearchNameActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent1);
+            return true;        
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent2 = new Intent(this, CookbookActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

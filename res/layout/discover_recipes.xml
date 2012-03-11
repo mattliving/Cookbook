@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#666666" >
+    android:background="#000000" >
 	<GridView
 	    android:id="@+id/discover_gridview"
-	    android:background="#666666"
+	    android:background="#000000"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:layout_centerInParent="true"

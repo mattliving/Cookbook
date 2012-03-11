@@ -1,15 +1,22 @@
 package com.cookbook.activity;
 
+import com.cookbook.*;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,7 +27,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cookbook.*;
 import com.cookbook.Utility;
 import com.cookbook.facebook.BaseDialogListener;
 import com.cookbook.facebook.FriendsGetProfilePics;
@@ -69,43 +75,11 @@ public class FriendsList extends FragmentActivity implements OnItemClickListener
             final long friendId = jsonArray.getJSONObject(position).getLong("uid");
             String name = jsonArray.getJSONObject(position).getString("name");
 
-            new AlertDialog.Builder(this).setTitle(R.string.post_on_wall_title)
-                    .setMessage(String.format(getString(R.string.post_on_wall), name))
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Bundle params = new Bundle();
-                            /*
-                             * Source Tag: friend_wall_tag To write on a friend's wall, 
-                             * provide friend's UID in the 'to' parameter.
-                             * More info on feed dialog:
-                             * https://developers.facebook.com/docs/reference/dialogs/feed/
-                             */
-                            params.putString("to", String.valueOf(friendId));
-                            params.putString("caption", getString(R.string.app_name));
-                            params.putString("description", getString(R.string.app_desc));
-                            params.putString("picture", Utility.HACK_ICON_URL);
-                            params.putString("name", getString(R.string.app_action));
-                            Utility.mFacebook.dialog(FriendsList.this, "feed", params,
-                                    new PostDialogListener());
-                        }
-
-                    }).setNegativeButton(R.string.no, null).show();
+            Intent intent = new Intent(v.getContext(), OnlineFriendsListActivity.class);
+        	intent.putExtra("to", String.valueOf(friendId));
+        	startActivityForResult(intent, 0);
         } catch (JSONException e) {
             showToast("Error: " + e.getMessage());
-        }
-    }
-
-    /*
-     * Callback after the message has been posted on friend's wall.
-     */
-    public class PostDialogListener extends BaseDialogListener {
-        public void onComplete(Bundle values) {
-            final String postId = values.getString("post_id");
-            if (postId != null) {
-                showToast("Message posted on the wall.");
-            } else {
-                showToast("No message posted on the wall.");
-            }
         }
     }
 
@@ -201,5 +175,34 @@ public class FriendsList extends FragmentActivity implements OnItemClickListener
         ImageView profile_pic;
         TextView name;
         TextView info;
+    }
+    
+    //Important method for action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    
+    //Important method for action bar, item selected listenener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        	case R.id.search:
+            // app icon in action bar clicked; go home
+            Intent intent1 = new Intent(this, SearchNameActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent1);
+            return true;        
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent2 = new Intent(this, CookbookActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

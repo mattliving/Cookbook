@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<style name="NoTitleBar" parent="@android:style/Theme.NoTitleBar"></style>
+	<style name="NoTitleBar" parent="@android:style/Theme.NoTitleBar"></style>
+	<style name="foodRatingBar" parent="@android:style/Widget.RatingBar">
+	        <item name="android:progressDrawable">@drawable/ratingstars</item>
+	        <item name="android:minHeight">22dip</item>
+	        <item name="android:maxHeight">22dip</item>
+	</style>
 </resources>

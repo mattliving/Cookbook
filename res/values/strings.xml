@@ -17,7 +17,6 @@
     <string name="post_on_wall">Would you like to post on %1$s\'s wall</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
         
     <string name="Ingredient">Ingredient</string>
     <string name="Amount">Amount (weight, volume etc.)</string>
@@ -63,9 +62,18 @@
         
         <item >Other</item>
     </string-array>
-    <string name="categories_prompt">Sort</string>
+    <string name="categories_prompt">Search by</string>
     <string-array name="categories_array">
         <item>By Name</item>
+        <item>By Category</item>
+        <item>By Cooking Duration</item>
+        <item>By Occasion</item>
+        <item>By Region</item>
+        <item>By Rating</item>
+    </string-array>
+        <string name="sort_prompt">Sort recipes</string>
+    <string-array name="sort_array">
+        <item>Alphabetically</item>
         <item>By Category</item>
         <item>By Cooking Duration</item>
         <item>By Occasion</item>
@@ -113,7 +121,7 @@
     <string name="Seasonal">Seasonal preference (optional)</string>
     <string name="Remove">Remove</string>
     
-    <string name="hello123">Hi!</string>
+    <string name="recipeName">Recipe Name</string>
     <string name="method">Method:</string>
     <string name="mealtype">Meal Type:</string>
     <string name="duration">Duration:</string>
@@ -121,4 +129,16 @@
     <string name="region">Region:</string>
     <string name="Quantity">Quantity (weight, volume etc.)</string>
     <string name="Region">Region of origin (optional)</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="quantity">Quantity</string>
+    <string name="search">Search</string>
+	<string name="filter">Filter</string>
+	<string name="Video">Video Link (optional)</string>
+    <string name="PortionSize">Portion Size</string>
+    <string name="Serves">Serves</string>
+    <string name="Photo">Take a Photo</string>
+    <string name="TakePhoto">Take and upload a photo</string>
+    <string name="FinshedEditing">Finished Editing</string>
+    <string name="sorter">Sort</string>
+    
 </resources>

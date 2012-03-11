@@ -2,10 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookbook"
     android:versionCode="1"
-    android:versionName="gamma" >
+    android:versionName="Gamma" >
 
-    <uses-sdk android:minSdkVersion="7" 
-        	  android:targetSdkVersion="13" />
+    <uses-sdk android:minSdkVersion="8" 
+        	  android:targetSdkVersion="15" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -16,11 +16,11 @@
             android:name=".activity.CookbookActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".activity.AddRecipeActivity"></activity>
+        <activity android:name=".activity.EditRecipeActivity"></activity>
 		<activity android:name=".activity.BookmarksActivity"></activity>
 		<activity android:name=".activity.DiscoverActivity"></activity>
 		<activity android:name=".activity.FriendsList"></activity>
@@ -31,11 +31,18 @@
      	<activity android:name=".activity.FilterActivity"></activity>
      	<activity android:name=".activity.RecipeListFilterActivity"></activity>
         <activity android:name=".activity.UserRecipesActivity"></activity>
-        <activity android:name=".activity.SearchActivity"></activity>
+        <activity android:name=".activity.SearchNameActivity"></activity>
         <activity android:name=".activity.ShowListActivity"></activity>
         <activity android:name=".activity.SuggestionActivity"></activity>
+        <activity android:name=".activity.AllRecipesActivity"></activity> 
+        <activity android:name=".activity.BasicListActivity"></activity>
+        <activity android:name=".activity.SortedListActivity"></activity>
+        <activity android:name=".activity.OnlineFriendsListActivity"></activity>
+        <activity android:name=".activity.OnlineListActivity"></activity>
+        <activity android:name=".activity.SortActivity"></activity>
+        <activity android:name=".activity.SearchIngredientActivity"></activity>
     </application>
-    
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
 </manifest>

@@ -4,28 +4,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <LinearLayout
-        android:id="@+id/navbar"
-        style="@android:style/ButtonBar"
-        android:layout_width="match_parent"
-        android:layout_height="51dp"
-        android:weightSum="2" >
-
-        <ImageButton
-            android:id="@+id/homeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_menu_home" />
-
-        <ImageButton
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_search_category_default" />
-    </LinearLayout>
-
     <TabHost
         android:id="@+id/tabHost"
         android:layout_width="fill_parent"
@@ -124,32 +102,20 @@
                                 android:hint="@string/Minutes"
                                 android:inputType="number" />
                         </LinearLayout>
-                        
+
                         <TextView
-                            android:id="@+id/textView4"
+                            android:id="@+id/textView7"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/Seasonal"
+                            android:text="@string/Serves"
                             android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <EditText
-                            android:id="@+id/Season"
+                            android:id="@+id/PortionSize"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/Seasonal" />
-                        
-                        <TextView
-                            android:id="@+id/textView5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/Region"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                        <EditText
-                            android:id="@+id/Region"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/Region" />
+                            android:hint="@string/PortionSize"
+                            android:inputType="number" />
                         
                     </LinearLayout>
                 </ScrollView>
@@ -279,6 +245,72 @@
 
                     <requestFocus />
                 </EditText>
+            </LinearLayout>
+            
+            <!-- ///////////////////////////////////////////////// -->
+            <!-- //////////////////TAB 4////////////////////////// -->
+            <!-- ///////////////////////////////////////////////// -->
+
+            <LinearLayout
+                android:id="@+id/tab4"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical"
+                android:paddingTop="70dp" >
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Seasonal"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/Season"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Seasonal" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Region"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/Region"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Region" />
+                
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Video"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <EditText
+                    android:id="@+id/Videolink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/Video" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/TakePhoto"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/ImageUpload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="listenerOfPhotoButton"
+                    android:text="@string/Photo" />
+
             </LinearLayout>
         </FrameLayout>
     </TabHost>

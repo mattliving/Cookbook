@@ -18,4 +18,18 @@
             android:layout_below="@id/label"
             android:prompt="@string/measurementSetting" />
 
+        <TextView
+        android:id="@+id/label2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/measurementSpinner"
+        android:text="@string/sort_prompt" />
+    
+    <Spinner
+        android:id="@+id/sortSpinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/label2"
+        android:prompt="@string/sort_prompt" />
+
 </RelativeLayout>

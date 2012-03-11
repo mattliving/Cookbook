@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/search"
+          android:title="@string/search"
+          android:icon="@drawable/search_icon"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/filter"
+          android:title="@string/filter"
+          android:icon="@drawable/filter_icon"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/sorter"
+          android:title="@string/sorter"
+          android:icon="@drawable/sort_icon"
+          android:showAsAction="ifRoom"/>
+                
+</menu>

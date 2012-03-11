@@ -2,28 +2,30 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#666666"
+    android:background="#000000"
     android:gravity="center" >
-
-    <ImageView 
+    
+    <ImageView
         android:id="@+id/logo"
-        android:background="@drawable/cookbook_logo"
         android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_centerHorizontal="true"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/cookbook_logo"
         android:gravity="center" />
-	<GridView
-	    android:id="@+id/main_gridview"
-	    android:background="#666666"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_below="@id/logo"
-	    android:layout_centerInParent="true"
-	    android:columnWidth="90dp"
-	    android:gravity="center"
-	    android:horizontalSpacing="10dp"
-	    android:numColumns="2"
-	    android:stretchMode="columnWidth"
-	    android:verticalSpacing="10dp" >
-	</GridView>
+
+    <GridView
+        android:id="@+id/main_gridview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="#000000"
+        android:columnWidth="90dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="10dp" >
+    </GridView>
+
 </RelativeLayout>

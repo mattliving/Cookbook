@@ -3,13 +3,14 @@ package com.cookbook.activity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
+import android.support.v4.app.*;
+import android.support.v4.view.Menu;
+import android.support.v4.view.MenuItem;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cookbook.*;
-import com.cookbook.Utility;
 import com.cookbook.adapter.CookbookDBAdapter;
 import com.cookbook.adapter.MainImageAdapter;
 import com.cookbook.facebook.BaseRequestListener;
@@ -42,6 +42,8 @@ public class CookbookActivity extends FragmentActivity {
     private TextView mText;
     private ImageView mUserPic;
 	public CookbookDBAdapter mDbHelper;
+	static final int SETTINGS_RESULT = 0;
+	private String sortby = "recipeName";
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,24 +53,16 @@ public class CookbookActivity extends FragmentActivity {
         Utility.mFacebook = new Facebook(APP_ID);
         // Instantiate the asynrunner object for asynchronous api calls.
         Utility.mAsyncRunner = new AsyncFacebookRunner(Utility.mFacebook);
-        /*Utility.mPrefs = getPreferences(MODE_PRIVATE);
-        String access_token = Utility.mPrefs.getString("access_token", null);
-        long expires = Utility.mPrefs.getLong("access_expires", 0);
-        if (access_token != null) {
-        	Utility.mFacebook.setAccessToken(access_token);
-        }
-        if (expires != 0) {
-        	Utility.mFacebook.setAccessExpires(expires);
-        }
 
-        Restore session if one exists*/
+        // Restore session if one exists
         SessionStore.restore(Utility.mFacebook, this);
         SessionEvents.addAuthListener(new FbAPIsAuthListener());
-        SessionEvents.addLogoutListener(new FbAPIsLogoutListener());
+        SessionEvents.addLogoutListener(new FbAPIsLogoutListener());  
         
         if (!Utility.mFacebook.isSessionValid()) {
         	Utility.mFacebook.authorize(this, new DialogListener() {
                 public void onComplete(Bundle values) {}
+
                 public void onFacebookError(FacebookError error) {}
                 public void onError(DialogError e) {}
                 public void onCancel() {}
@@ -87,22 +81,11 @@ public class CookbookActivity extends FragmentActivity {
             	switch (position) {
 	            	case 0:
 	            		intent = new Intent(v.getContext(), MyRecipesActivity.class);
+	                	intent.putExtra("sortby", sortby);
 	                	startActivityForResult(intent, 0);
 	                	break;
 	            	case 1:
-	            		/*SessionStore.restore(Utility.mFacebook, getBaseContext());
-	                    SessionEvents.addAuthListener(new FbAPIsAuthListener());
-	                    SessionEvents.addLogoutListener(new FbAPIsLogoutListener());
-	                    
-	                    if (!Utility.mFacebook.isSessionValid()) {
-	                    	Utility.mFacebook.authorize((Activity)v.getContext(), new DialogListener() {
-	                            public void onComplete(Bundle values) {}
-	                            public void onFacebookError(FacebookError error) {}
-	                            public void onError(DialogError e) {}
-	                            public void onCancel() {}
-	                        });
-	                    }*/
-	            		String query = "SELECT name, current_location, uid, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) order by name";
+	            		String query = "SELECT name, current_location, uid, pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=me()) AND is_app_user ORDER BY name";
 	            		Bundle params = new Bundle();
                         params.putString("method", "fql.query");
                         params.putString("query", query);
@@ -110,15 +93,13 @@ public class CookbookActivity extends FragmentActivity {
 	                	break;
 	            	case 2:
 	            		intent = new Intent(v.getContext(), DiscoverActivity.class);
-	                	startActivityForResult(intent, 2);
+	                	intent.putExtra("sortby", sortby);
+	                	startActivityForResult(intent, 0);
 	                	break;
 	            	case 3:
 	            		intent = new Intent(v.getContext(), SettingsActivity.class);
-	                	startActivityForResult(intent, 3);
-	                	break;
-	            	case 4:
-	            		intent = new Intent(v.getContext(), SearchActivity.class);
-	                	startActivityForResult(intent, 4);
+	                	startActivityForResult(intent, SETTINGS_RESULT);
+	            		
 	                	break;
 	            	default:
 	            		break;
@@ -127,9 +108,25 @@ public class CookbookActivity extends FragmentActivity {
         });
     }
     
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        
+        if(requestCode == SETTINGS_RESULT){
+        	if(resultCode == 0){
+        		sortby = "recipeName";
+        	}else if(resultCode == 1){
+        		sortby = "typeOfMeal";
+        	}else if(resultCode == 2){
+        		sortby = "duration";
+        	}else if(resultCode == 3){
+        		sortby = "season";
+        	}else if(resultCode == 4){
+        		sortby = "region";
+        	}else if(resultCode == 5){
+        		sortby = "rating";
+        	}
+        	
+        }
         Utility.mFacebook.authorizeCallback(requestCode, resultCode, data);
     }
 
@@ -193,6 +190,7 @@ public class CookbookActivity extends FragmentActivity {
      * The Callback for notifying the application when authorization succeeds or
      * fails.
      */
+
     public class FbAPIsAuthListener implements AuthListener {
         public void onAuthSucceed() {
             requestUserData();
@@ -215,6 +213,42 @@ public class CookbookActivity extends FragmentActivity {
         public void onLogoutFinish() {
             mText.setText("You have logged out! ");
             mUserPic.setImageBitmap(null);
+        }
+    }
+    
+    
+    //Important method for action bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+    
+    //Important method for action bar, item selected listenener
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+        	case R.id.search:
+            // app icon in action bar clicked; go home
+            Intent intent1 = new Intent(this, SearchNameActivity.class);
+            intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent1);
+            return true;      
+        	case R.id.filter:
+                // app icon in action bar clicked; go home
+                Intent intent2 = new Intent(this, FilterActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+                return true;      
+            case android.R.id.home:
+                // app icon in action bar clicked; go home
+                Intent intent3 = new Intent(this, CookbookActivity.class);
+                intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent3);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
